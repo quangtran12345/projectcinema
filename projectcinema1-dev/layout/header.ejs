@@ -1,0 +1,55 @@
+<header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid" style="background-color: coral;">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/"><img src="/images/video-play.png" width="25px" height="25px" /></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li id="title-word"><a href="/" style="color:white; font: 25px bold;">David Cinema<span class="sr-only">(current)</span></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <% if(title === 'index') {%>
+            <li style="padding: 13px; width: 200px">
+                <select ng-init="dataSearch = types[0]" ng-change="orderBy()" ng-model="dataSearch" ng-options="type for type in types"
+                  name="genre" class="required form-control" id="genre" aria-required="true" id="exampleSelect2"
+                  aria-invalid="false">
+                </select>
+            </li>
+            <li>
+              <input id="searchValue" ng-model="searchValue" ng-click="parseMovieName()" style="display: inline-block;margin-top: 13px" class="form-control" type="text"  placeholder="Search">  
+            </li>
+            <li style="padding: 13px">
+                <button ng-click="search()" class="btn" style="display: inline; color: coral; background-color: white;">
+                  Search
+                </button>
+              </li>
+            <% } %>
+            <% if(email.email) { %>
+            <li><a href="/profile" id="email" style="color: white; font: 20px bold "><%= email.email %></a></li>
+            <% } %>
+            <% if(!email.email) { %>
+            <li><a href="/reg" style="color:white; font: 20px bold  ; "> <i class="fa fa-user-plus" aria-hidden="true"></i>
+                Sign Up</a></li>
+            <% } %>
+            <% if(email.email) {%>
+            <li><a href="/create" style="color:white; font: 20px bold  ; "> <span class="glyphicon glyphicon-plus"></span>
+                Create</a></li>
+            <% } %>
+            <% if(email.email) {%>
+              <li><a href="#" style="color:white; font: 20px bold  ; " id="logout" data-toggle="modal" data-target=".bs-example-modal-sm"> <i class="fas fa-sign-out-alt"></i>
+                Logout</a></li>
+            <% } %>
+            
+            <% if(!email.email) { %>
+            <li><a href="/login" style="color:white; font: 20px bold;"><span class="glyphicon glyphicon-log-in"></span>
+                Login</a></li>
+            <% } %>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+  </header>

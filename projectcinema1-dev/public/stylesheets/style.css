@@ -1,0 +1,182 @@
+
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+section {
+   margin-top: 30px;
+}
+
+#title-word {
+  background-color:coral!important;
+}
+
+#register-button {
+  background-color: coral!important;
+  width: 130px;
+  color: white;
+  border-radius: 20px;
+}
+
+#register-button:hover {
+  background-color: white!important;
+  border: 1px solid coral;
+  color: coral; 
+}
+#cancel-button {
+  color: white;
+  width: 130px;
+  border-radius: 20px;
+}
+#cancel-button:hover {
+  background-color: white!important;
+  border: 1px solid #9F1C00;
+  color: #9F1C00;
+}
+#exampleImage {
+    opacity: 1;
+    float: left;
+    position: absolute;
+}
+
+#chooseFile {
+  background-color: coral;
+  border-radius: 10px;
+  text-align: center;
+  width: 120px;
+  padding: 10px;
+  display: block;
+  color: white;
+}
+
+#chooseFile:hover {
+  background-color: white;
+  border: 1px solid coral;
+  color: coral;
+}
+
+.align-right {
+    float: right;
+}
+
+#detail-button {
+    color: white;
+    background-color: coral;
+    width: 100px;
+    border-radius: 20px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  object-fit: scale-down;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+  background-color: coral!important;
+  color: white;
+  border-radius: 20px;
+}
+
+.btn-file:hover {
+  background-color: chocolate!important;
+  color: white;
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 999px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+ 
+  cursor: inherit;
+  display: block;
+}
+input[readonly] {
+  background-color: white !important;
+  cursor: text !important;
+}
+.btn-block {
+  border: none;
+  background-color: coral!important;
+}
+
+#change-button {
+  border-radius: 20px;
+  display: none;
+}
+
+.input-userprofile {
+  display: none;
+}
+
+.label-userprofile {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+}
+
+#btnCancel {
+  background-color: darkred; 
+  color: white;
+  border-radius: 20px;
+  display: none;
+  width: 100px;
+}
+
+#btnEdit {
+  background-color: coral; 
+  color: white;
+  border-radius: 20px;
+  display: none;
+  width: 100px;
+}
+
+#btnCancel:hover {
+  background-color: #510505;
+}
+
+#btnEdit:hover {
+  background-color: wheat!important;
+}
+
+.input-detailMovie {
+  display: none;
+}
+
+.btn-sm:hover {
+  background-color: wheat!important;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+a {
+  text-decoration: none;
+}
+
+#eventForShow:hover {
+  background-color: wheat!important;
+}
+
+#btnChangePass:hover{
+  color: coral!important;
+}

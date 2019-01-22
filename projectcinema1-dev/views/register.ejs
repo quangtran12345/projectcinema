@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="Movie">
+
+<% include ../layout/head %>
+
+<body ng-controller="registerController" style="margin:0;padding:0">
+    <% include ../layout/header %>
+    <section style="min-height: 518px; padding-top: 80px">
+        <div class="container" >
+            <div class="row" id="signUpPage">
+                <div class="col-md-4 col-md-offset-4" style="border: 1px solid coral; border-radius: 10px;">
+                    <h1 style="text-align: center; color: coral; font-family: Georgia, 'Times New Roman', Times, serif">Sign Up</h1>
+                    <form class="form" ng-submit="submit()">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" style="color: coral">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email"
+                                ng-model="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" style="color: coral">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                                ng-model="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputConfirm" style="color: coral">Confirm</label>
+                            <input type="password" class="form-control" id="exampleInputConfirm" placeholder="Password"
+                                ng-model="confirm">
+                        </div>
+                        <div class="form-group" style="text-align: center;">
+                            <button type="submit" id="btnSignUp" class="btn" id="register-button">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <% include ../layout/footer %>
+</body>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="/javascripts/bootstrap-notify-3.1.3/bootstrap-notify.min.js"></script>
+<script src="/javascripts/apiService.js"></script>
+<script src="/javascripts/User/register.js"></script>
+
+</html>

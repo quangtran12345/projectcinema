@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html ng-app="Movie">
+<% include ../layout/head %>
+<body ng-controller="listController" style="margin:0;padding:0;">
+  <input type="hidden" value="<%= token %>" ng-model="token" />
+  <header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid" style="background-color: coral;">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/"><img src="../images/video-play.png" width="25px" height="25px" /></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li id="title-word"><a href="/" style="color:white; font: 25px bold;">David Cinema<span class="sr-only">(current)</span></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li style="padding: 13px; width: 200px">
+                <select ng-init="dataSearch = types[0]" ng-change="orderBy()" ng-model="dataSearch" ng-options="type for type in types"
+                  name="genre" class="required form-control" id="genre" aria-required="true" id="exampleSelect2"
+                  aria-invalid="false">
+                </select>
+            </li>
+            <li>
+              <input id="searchValue" ng-model="searchValue" ng-click="parseMovieName()" style="display: inline-block;margin-top: 13px" class="form-control" type="text"  placeholder="Search">  
+            </li>
+            <li style="padding: 13px">
+                <button ng-click="search()" class="btn" style="display: inline; color: coral; background-color: white;">
+                  Search
+                </button>
+              </li>
+            <% if(email.email) { %>
+            <li><a href="/profile" id="email" style="color: white; font: 20px bold "><%= email.email %></a></li>
+            <% } %>
+            <% if(!email.email) { %>
+            <li><a href="/reg" id="moveSignupPage" style="color:white; font: 20px bold  ; "> <i class="fa fa-user-plus" aria-hidden="true"></i>
+                Sign Up</a></li>
+            <% } %>
+            <% if(email.email) {%>
+            <li><a href="/create" id="moveCreatePage" style="color:white; font: 20px bold  ; "> <span class="glyphicon glyphicon-plus"></span>
+                Create</a></li>
+            <% } %>
+            <% if(email.email) {%>
+              <li><a href="#" style="color:white; font: 20px bold  ; " id="btnModalSignout" data-toggle="modal" data-target=".bs-example-modal-sm"> <i class="fas fa-sign-out-alt"></i>
+                Logout</a></li>
+            <% } %>
+            
+            <% if(!email.email) { %>
+            <li><a href="/login" id="linkToLoginPage" style="color:white; font: 20px bold;"><span class="glyphicon glyphicon-log-in"></span>
+                Login</a></li>
+            <% } %>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+  </header>
+  <section style="padding: 50px;min-height: 800px; ">
+    <div class="row" id="homePage" data-ng-init="items()">
+      <div class="col-sm-6 col-md-3" ng-repeat="item in listFilmTemp | filter:{name:searchValue} | filter:{genre:dataOrderby}">
+        <a style="color:black;text-decoration: none" href="/detail/{{item.linkMovie}}">
+        <div class="thumbnail" style="background-color: white;" id="moveDetailPage">
+          <img ng-src="{{item.image}}"  class="img" alt="Anh Phim" style="object-fit: cover; max-height: 400px;min-height: 400px">
+          <div class="caption mh-100"  style="min-height: 200px!important">
+            <div style="height: 150px; min-height: 150px; max-height: 150px;">  
+              <h3 style="font-weight: bold; color:coral;" id="nameMovieCreate"> {{item.name}}</h3>
+              <p>
+                <p style="display: inline; font-style: italic">{{item.genre}}</p>
+              </p>
+              <p>
+                <p style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-style: italic;
+               overflow: hidden!important;text-overflow: ellipsis; height: 20px;">{{item.content}}</p>
+              </p>
+              <span>
+                <p style="font-weight: bold; color: coral; display: inline;">Release Date:</p><span> {{item.date | date:
+                  'dd/MM/yyyy'}}</span>
+              </span>
+            </div>
+            <p class="text-right"><a ng-href="/detail/{{item._id}}" class="btn" id="detail-button" role="button">Detail</a></p>
+          </div>
+        </div>
+      </a>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal bs-example-modal-sm" tabindex="-1" id="logoutModal" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center" style="padding: 50px 0 50px 0;"><i class="fa fa-question-circle"></i> Are you sure you want to log-out?</div>
+            <div class="modal-footer center">
+              <a href="#" data-dismiss="modal" style="color:white; font-weight: bold;float: left;background-color: darkred!important"class="btn">Cancel</a>
+              <a ng-click="logout()" id="btnLogout" style="color:white; font-weight: bold;background-color: coral!important"class="btn ">Logout</a>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ <!-- Footer -->
+ <footer id="myFooter" style="background-color:coral; color: white; padding: 50px;">
+  <div class="container">
+      <div class="row">
+        <div class="footer-copyright text-center py-3">© 2018 Copyright:
+          <a href="/"> David Cinema</a>
+        </div>
+      </div>
+  </div>
+</footer>
+</body>
+<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+  crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="/javascripts/bootstrap-notify-3.1.3/bootstrap-notify.min.js"></script>
+<script src="/javascripts/apiService.js"></script>
+<script src="/javascripts/Movie/listMovies.js"></script>
+
+
+</html>

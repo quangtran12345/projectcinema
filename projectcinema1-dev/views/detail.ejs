@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html ng-app="Movie" >
+<% include ../layout/head %>
+<body ng-controller="detailController" style="margin: 0; padding: 0">
+<% include ../layout/header %>
+<section style="margin-top: 75px; max-width: 98%; padding-left: 2%; min-height: 500px">
+            <p id="id" style="display: none"><%= id  %></p>
+    <input type="hidden" id="author" value="{{detailMovie.email}}" >  
+    <div class="row panel panel-warning" style="margin-top:2%;">
+        <div class="panel-heading lead">
+            <div class="row" id="editPage">
+                <div class="col-lg-8 col-md-8"><i class="fas fa-film"></i> View Movie Details</div>
+                <div class="col-lg-4 col-md-4 text-right">
+                    <div class="btn-group text-center"  id="checkAuthor">
+                        <% if(email.email) { %>
+                        <a id="btnUpdate" ng-click="showFormEdit()" style="color: #8a6d3b;border:1px solid;border-radius: 2px; display: none;background-color:white"  class="btn btn-sm " class="btn"><i class="fa fa-edit fa-1x"></i></a>
+                        <a id="btnCancel1" ng-click="cancelFormEdit()" style="color: #8a6d3b;border:1px solid; display: none;background-color:white"  class="btn btn-sm "><i class="fa fa-edit fa-1x"></i></a>
+                        <a id="btnDelete" data-toggle="modal" data-target=".bs-delete-modal-sm"  style="border:1px solid ;color: #8a6d3b; background-color:white;display:none;"class="btn btn-sm"><i class="fa fa-trash fa-1x"></i></a>
+                       <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">      
+                                             
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 text-center">
+                                <center>
+                                    <span >
+                                    <img style=" object-fit: cover;max-height: 300px" id="image" 
+                                    style="min-width: 200px; min-width: 200px; width: 200px; object-fit: scale-down;height:200px;max-height: 200px; min-height: 200px" ng-src="{{detailMovie.image}}" class="img-responsive img-thumbnail">
+                                    <div class="table-responsive col-sm-12" style="padding:5px; border: none">
+                                    <table class="table">
+                                                <tr>
+                                                    <div class="input-group col-lg-3" >
+                                                            <span class="input-group-btn">
+                                                                    <span id="change-button" class="btn btn-file" >
+                                                                        Change Avatar
+                                                                        <input accept="image/png, image/jpeg" name="file"
+                                                                            type="file" id="files">
+                                                                    </span>
+                                                            </span>
+                                                    </div>
+                                                </tr>                                  
+                                        </tbody>
+                                    </table>
+                                </div> 
+                            </div>
+                            <div class="col-lg-9 col-md-9">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" class="text-success"><i class="fa fa-indent"></i> Summary</a></li>	
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active">
+                                        <div class="table-responsive panel">
+                                            <table class="table"  style="height:200px ">
+                                                <tbody>
+                                                        <tr>
+                                                            <td class="text-success"><i class="fa fa-user"></i> Movie Name</td>
+                                                            <td class="label-detailMovie" id="nameMovie">{{detailMovie.name}}</td>
+                                                            <td class="input-detailMovie"><input id="inputMovieName" type="text" ng-model="detailMovie.name" ng-value="detailMovie.name" class="form-control input-data" placeholder="Name" ></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-success"><i class="fa fa-list-ol"></i> Genre</td>
+                                                            <td class="label-detailMovie">{{detailMovie.genre}}</td>
+                                                            <td class="input-detailMovie">
+                                                                <select ng-init="detailMovie.genre = genres[0]" ng-model="detailMovie.genre" ng-options="genre for genre in genres"
+                                                                    class="required form-control" id="genre" aria-required="true"
+                                                                    aria-invalid="false">
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-success"><i class="fas fa-calendar-check"></i> Date</td>
+                                                            <td class="label-detailMovie">{{detailMovie.date | date:
+                                                                    'dd/MM/yyyy'}}</td>
+                                                            <td class="input-detailMovie"><input name="date" ng-model="dataMovies.date" ng-value="detailMovie.date | date: 'dd/MM/yyyy'" type="text" class="form-control input-data" id="datepicker"
+                                                                    aria-invalid="false" aria-required="true"></td>
+                                                        </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span class="label-detailMovie" style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 15px; word-spacing: 2px">
+                        <p class="text-success" > <i class="fas fa-book-open"></i> Movie's Content</p>
+                        {{detailMovie.content}}  
+                </span>
+                <textarea ng-model="detailMovie.content" type="text" style="padding: 10px; height: 150px" class="form-control input-detailMovie"></textarea>
+                <div class="col-xs-12" style="text-align: center; margin-top: 20px">
+                        <button type="button" id="btnCancel" ng-click="cancelFormEdit()" class="btn">Cancel</button>
+                        <button type="button" id="btnEdit"
+                            style="background-color: coral; color: white"  ng-click="editMovie()" class="btn">Update</button>
+                </div>
+        </div>
+    </div>
+</section>
+<% include ../layout/footer %>
+<div class="modal bs-delete-modal-sm" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-body text-center" style="padding: 50px 0 50px 0;"><i class="fa fa-question-circle"></i> Are you sure you want to deleted !</div>
+        
+        <div class="modal-footer">
+            <a ng-click="deleteMovie()" id="deleteConfirm" style="color:white; font-weight: bold;background-color: coral!important"class="btn ">Delete</a>
+            <a href="#" data-dismiss="modal" style="color:white; font-weight: bold;float: left;background-color: darkred!important"class="btn">Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-body text-center" style="padding: 50px 0 50px 0;"><i class="fa fa-question-circle"></i> Are you sure you want to log-out?</div>
+        <div class="modal-footer center">
+            <a href="#" data-dismiss="modal" style="color:white; font-weight: bold;float: left;background-color: darkred!important"class="btn">Cancel</a>
+            <a href="/logout" style="color:white; font-weight: bold;background-color: coral!important"class="btn ">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular.min.js"></script>
+    <script src="/javascripts/bootstrap-notify-3.1.3/bootstrap-notify.min.js"></script>
+    <script src="/javascripts/apiService.js"></script>
+    <script src="/javascripts/Movie/detailMovie.js"></script>
+    <script>
+    document.getElementById("files").onchange = function () {
+        var reader = new FileReader();
+        var fileName = document.getElementById("filename");
+        reader.onload = function (e) {
+            // get loaded data and render thumbnail.
+            document.getElementById("image").src = e.target.result;
+        };
+
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+
+    };  
+</script>
+<script>
+    $(function () {
+        $("#datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
+        $("#datepicker").datepicker().datepicker("setDate", new Date());
+    })
+</script>
+</html>
