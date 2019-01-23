@@ -9,7 +9,7 @@ function createPassportConfig(app) {
   passport.use(new GoogleStrategy({
     clientID: keys.google.clientID,
     clientSecret: keys.google.clientSecret,
-    callbackURL: "http://localhost:3000/api/user/google/callback",
+    callbackURL: "https://davidcinema.herokuapp.com/api/user/google/callback",
     passReqToCallback: true
   }, (req, accessToken, refreshToken, profile, done) => {
     console.log(profile)
@@ -43,7 +43,7 @@ function createPassportConfig(app) {
   passport.use(new FacebookStrategy({
     clientID: keys.facebook.clientID,
     clientSecret: keys.facebook.clientSecret,
-    callbackURL: "http://localhost:3000/api/user/facebook/callback"
+    callbackURL: "https://davidcinema.herokuapp.com/api/user/facebook/callback"
   },
     function (accessToken, refreshToken, profile, done) {
       console.log(profile)
