@@ -24,17 +24,19 @@
                             <button type="submit" id="btnLogin" ng-click="submit()" class="btn" style="background-color: coral!important;width: 130px;color: white;border-radius: 20px;" >Login</button>
                             <a href="/forgot" style="color:coral; cursor: pointer;display: block; padding:10px">Forgot Password</a>
                         </div>
-                        <div style="padding: 20px; text-align: center;">
-                            <a href="api/user/google" class="btn" style="background-color: white!important;width: 130px;color: grey;border: 1px solid lightgrey;font-size: 22px"><img src="/images/google_favicon3.png" />oogle</a>
-                            <a href="" class="btn" style="background-color: white!important;width: 130px;color: grey;border: 1px solid lightgrey;font-size: 22px"><img src="/images/facebook_favicon.png" />acebook</a>                            
-                        </div>
+                        
                     </form>
+                    <div style="padding: 10px; text-align: center;">
+                        <a href="api/user/google" class="btn" style="background-color: white!important;width: 130px;color: grey;border: 1px solid lightgrey;font-size: 22px;margin-right: 10px"><img src="/images/google_favicon3.png" />oogle</a>
+                        <a href="api/user/facebook" class="btn" style="background-color: white!important;width: 130px;color: grey;border: 1px solid lightgrey;font-size: 22px"><img src="/images/facebook_favicon.png" />acebook</a>                            
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     <% include ../layout/footer %>
 </body>
+
 <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

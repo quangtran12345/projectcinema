@@ -10,6 +10,7 @@ const authorUser = require('../controller/authorUser')
 async function createUser(data) {
     let user = new User(data)
     user = await user.save()
+    
     return { user: user }
 }
 

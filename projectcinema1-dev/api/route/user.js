@@ -60,10 +60,10 @@ router.put("/userUpdate", fileUpload(), async function (req, res, next) {
             fileName = "/images/" + fileName
         }
         var user = await userController.userUpdate(req, fileName)
-        if(!user) {
-            return res.send({message: 'Update user that bai hay thu lai'})
+        if (!user) {
+            return res.send({ message: 'Update user that bai hay thu lai' })
         }
-        return res.send({message: 'Update user thanh cong'})
+        return res.send({ message: 'Update user thanh cong' })
     } catch (error) {
         return res.status(500).send(error.message)
     }
@@ -103,40 +103,46 @@ router.post("/reset/:token", async function (req, res, next) {
 })
 router.get('/google', passport.authenticate('google', {
     scope:
-    [ 'https://www.googleapis.com/auth/userinfo.email',
-      'https://www.googleapis.com/auth/userinfo.profile' ]}))
+        ['https://www.googleapis.com/auth/userinfo.email',
+            'https://www.googleapis.com/auth/userinfo.profile']
+}))
 
 router.get('/google/callback', function (req, res, next) {
-  passport.authenticate('google',async function (err, user, info) {
-    if (err) {
-      return res.send({ errorMessage: err })
-    }
-    var email = {}
-    var token = {}
-    if (req.session.token) {
-        token = req.session.token
-        email = await authorUser.authorizationUser(token)
-    }
-    res.render('index', { title: 'Home', email: email, token: token })
-  })(req, res, next)
+    passport.authenticate('google', async function (err, user, info) {
+        if (err) {
+            return res.send({ errorMessage: err })
+        }
+        var email = {}
+        var token = {}
+        if (req.session.token) {
+            token = req.session.token
+            email = await authorUser.authorizationUser(token)
+        }
+        res.render('index', { title: 'Home', email: email, token: token })
+    })(req, res, next)
 })
 
-// router.post("/google", async function (req, res, next) {
-//     try {
-       
-//         var user = {
-//             email:req.body['user[email]'],
-//             name:req.body['user[name]'],
-//             image:req.body['user[image]'],
-//         } 
-        
-//         var response = await userController.loginGoogle(req,user)
-//         return res.send(response);
-//     } catch (error) {
-//         console.log(error.message)
-//         return res.status(500).send(error.message)
-//     }
-// })
+router.get('/facebook', passport.authenticate('facebook'))
+
+router.get('/facebook/callback', function (req, res, next) {
+    passport.authenticate('facebook', async function (err, user, info) {
+        if (err) {
+            return res.send({ errorMessage: err })
+        }
+        var email = {}
+        var token = {}
+        if (req.session.token) {
+            token = req.session.token
+            email = await authorUser.authorizationUser(token)
+        }
+        if (!req.session.token && info.token) {
+            email = await authorUser.authorizationUser(info.token)
+            req.session.token = info.token
+            console.log(email)
+        }
+        res.render('index', { title: 'Home', email: email, token: token })
+    })(req, res, next)
+})
 
 
 module.exports = router

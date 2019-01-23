@@ -1,5 +1,6 @@
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20')
+const FacebookStrategy = require('passport-facebook').Strategy
 const keys = require('./properties')
 const User = require('../api/model/User')
 const jwt = require('jsonwebtoken')
@@ -15,7 +16,7 @@ function createPassportConfig(app) {
     User.findOne({ email: profile.emails[0].value }, async function (err, user) {
       if (err) { return done(err) }
       if (user) {
-        var token = jwt.sign({ email: profile .emails[0].value }, keys.constant.secretCode)
+        var token = jwt.sign({ email: profile.emails[0].value }, keys.constant.secretCode)
         req.session.token = token
         return done(null, true, {
           user: user,
@@ -38,6 +39,37 @@ function createPassportConfig(app) {
     })
   }
   ))
+
+  passport.use(new FacebookStrategy({
+    clientID: keys.facebook.clientID,
+    clientSecret: keys.facebook.clientSecret,
+    callbackURL: "http://localhost:3000/api/user/facebook/callback"
+  },
+    function (accessToken, refreshToken, profile, done) {
+      console.log(profile)
+      User.findOne({ email: profile.id + '@facebook.com' }, async function (err, user) {
+        if (err) { return done(err) }
+        if (user) {
+          var token = jwt.sign({ email: profile.id + '@facebook.com' }, keys.constant.secretCode)
+          return done(null, true, {
+            user: user,
+            token: token
+          })
+        }
+
+        if(!user) {
+          let newUser = {
+            name: profile.displayName,
+            email: profile.id + '@facebook.com',
+            image: undefined,
+          }
+          let dataReturn = await userController.createUser(newUser)
+          var token = jwt.sign({ email: dataReturn.email }, keys.constant.secretCode)
+          done(null, dataReturn, {token: token})
+        }
+      })
+    }
+  ));
 
   passport.serializeUser(function (user, done) {
     done(null, user.id);
