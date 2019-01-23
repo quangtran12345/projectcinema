@@ -11,16 +11,20 @@ router.post("/create", fileUpload(), async function (req, res, next) {
                     var fileName = req.files.image.name;
                     req.body.image = '/images/' + fileName;
                     var file = req.files.image
-                    file.mv('../projectcinema1/public/images/' + fileName)
+                    file.mv('../public/images/' + fileName).catch((err) => console.log('caught it'))
                 }
                 const response = await movieController.createMovie(req.body)
-                return res.status(200).send(response)
+                if (response) {
+                    return res.status(200).send(response)
+                } else {
+                    return res.status(500).send({message: 'create fail'})
+                }
             }
         } else {
             throw new Error("Login")
         }
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).send({message: 'Create Fail'})
     }
 })
 
@@ -49,7 +53,7 @@ router.put("/editMovie", fileUpload(), async function (req, res) {
             if (req.files) {
                 fileName = req.files.image.name;
                 var file = req.files.image
-                file.mv('../projectcinema1/public/images/' + fileName)
+                file.mv('../projectcinema1/public/images/' + fileName).catch((err) => console.log('caught it'))
             }
             if(fileName) {
                 fileName = "/images/"+ fileName

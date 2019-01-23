@@ -7,14 +7,9 @@ const smtpTransport = require('nodemailer-smtp-transport')
 const generatorPassword = require("password-generator")
 const authorUser = require('../controller/authorUser')
 
-async function createUser(data, session) {
+async function createUser(data) {
     let user = new User(data)
     user = await user.save()
-    var token = jwt.sign({
-        id: user.id,
-        email: user.email,
-    }, properties.constant.secretCode);
-    session.token = token
     return { user: user }
 }
 
@@ -54,8 +49,7 @@ async function userProfile(req) {
 
 async function userUpdate(req, fileName) {
     var decoded = jwt.verify(req.body.token, properties.constant.secretCode)
-    var id = decoded.id
-    const user = await User.findById(id)
+    var user = await User.findOne({email : decoded.email})
     if (!user) {
         throw new Error("User isn't exist!")
     }
@@ -63,7 +57,8 @@ async function userUpdate(req, fileName) {
     user.birthday = req.body.birthday || user.birthday
     user.description = req.body.description || user.description
     user.image = fileName || user.image
-    await user.save()
+    user = await user.save()
+    return user
 }
 
 async function changePassword(token, oldPassword, newPassword,sessionToken) {
@@ -118,7 +113,7 @@ const sendResetPassword = async function (email, host) {
       }))
       var mailOptions = {
         from: properties.emailAuth,
-        to: "ooosurikenooo@gmail.com",
+        to: user.email,
         subject: '',
         text: "Click on the link below to complete the password change:\n\n" +
         "http://" + host + "/api/user/reset/" + token

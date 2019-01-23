@@ -7,7 +7,7 @@
 <body ng-controller="profileController" style="padding:0; margin: 0">
     <input type="hidden" id="token" value="<%= token %>" />
     <% include ../layout/header %>
-    <section style="margin-top: 50px; width: 82%; padding-left: 2%; min-height: 490px" class="col-md-7 col-md-offset-1">
+    <section style="margin-top: 62px; width: 82%; padding-left: 2%; min-height: 560px" class="col-md-7 col-md-offset-1">
         <div class="row panel panel-warning " style="margin-top:2%;">
             <div class="panel-heading lead ">
                 <div class="row">
@@ -39,8 +39,7 @@
                                                         <td class="text-center">
                                                             <div class="input-group">
                                                                 <span class="input-group-btn">
-                                                                    <span id="change-button" style="width: 120px; margin-left: 45px"
-                                                                        class="btn btn-file">
+                                                                    <span id="change-button" style="width: 120px;margin: 0 auto" class="btn btn-file">
                                                                         Change Avatar
                                                                         <input ng-model="userProfile.image" accept="image/png, image/jpeg"
                                                                             name="file" type="file" id="files">

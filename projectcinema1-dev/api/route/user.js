@@ -3,11 +3,18 @@ var router = express.Router()
 var fileUpload = require('express-fileupload')
 var userController = require('../controller/userController')
 var jwt = require('jsonwebtoken');
+var passport = require('passport');
+var authorUser = require('../controller/authorUser')
 
 router.post("/createUser", async function (req, res, next) {
     try {
         var session = req.session
-        const response = await userController.createUser(req.body, session);
+        const response = await userController.createUser(req.body);
+        var token = jwt.sign({
+            id: req.body.id,
+            email: req.body.email,
+        }, properties.constant.secretCode);
+        session.token = token
         return res.send(response);
     } catch (Error) {
         var a = Error.message.search('duplicate')
@@ -47,15 +54,18 @@ router.put("/userUpdate", fileUpload(), async function (req, res, next) {
         if (req.files) {
             fileName = req.files.image.name;
             var file = req.files.image
-            file.mv('../projectcinema1/public/images/' + fileName)
+            file.mv('../public/images/' + fileName).catch((err) => console.log('caught it'))
         }
         if (fileName) {
             fileName = "/images/" + fileName
         }
-        await userController.userUpdate(req, fileName)
-        return res.send()
+        var user = await userController.userUpdate(req, fileName)
+        if(!user) {
+            return res.send({message: 'Update user that bai hay thu lai'})
+        }
+        return res.send({message: 'Update user thanh cong'})
     } catch (error) {
-        return res.status(500).send(error)
+        return res.status(500).send(error.message)
     }
 })
 
@@ -91,8 +101,27 @@ router.post("/reset/:token", async function (req, res, next) {
         res.status(500).send(error.message)
     }
 })
+router.get('/google', passport.authenticate('google', {
+    scope:
+    [ 'https://www.googleapis.com/auth/userinfo.email',
+      'https://www.googleapis.com/auth/userinfo.profile' ]}))
 
-// router.post("/loginGoogle", async function (req, res, next) {
+router.get('/google/callback', function (req, res, next) {
+  passport.authenticate('google',async function (err, user, info) {
+    if (err) {
+      return res.send({ errorMessage: err })
+    }
+    var email = {}
+    var token = {}
+    if (req.session.token) {
+        token = req.session.token
+        email = await authorUser.authorizationUser(token)
+    }
+    res.render('index', { title: 'Home', email: email, token: token })
+  })(req, res, next)
+})
+
+// router.post("/google", async function (req, res, next) {
 //     try {
        
 //         var user = {

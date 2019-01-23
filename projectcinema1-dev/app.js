@@ -12,6 +12,7 @@ var usersRouter = require('./api/route/user');
 var movieRouter = require('./api/route/movie')
 var userRouter = require('./api/route/userRoute')
 var movieRoutes = require('./api/route/movieRoute')
+
 var app = express();
 
 //Connect MongoDB
@@ -36,6 +37,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true
  }))
+require('./api/passport').createPassportConfig(app)
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/user', usersRouter);

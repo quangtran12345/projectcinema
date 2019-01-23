@@ -5,8 +5,14 @@ const constant = {
     service: "GMAIL"
 }
 
+//add this file to .gitignore
+const google = {
+    clientID: '386711383368-tmtgshhlsav7q9chr7mddcisngee44lo.apps.googleusercontent.com',
+    clientSecret: 'MyhZZyEsMUe64tjsLPL2J6mJ'
+}
 
 module.exports = {
-    constant : constant
+    constant : constant,
+    google : google
 }
     
