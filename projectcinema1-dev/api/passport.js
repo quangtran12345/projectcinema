@@ -64,7 +64,7 @@ function createPassportConfig(app) {
             image: undefined,
           }
           let dataReturn = await userController.createUser(newUser)
-          var token = jwt.sign({ email: dataReturn.email }, keys.constant.secretCode)
+          var token = jwt.sign({ email: newUser.email }, keys.constant.secretCode)
           done(null, dataReturn, {token: token})
         }
       })

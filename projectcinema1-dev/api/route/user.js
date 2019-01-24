@@ -131,12 +131,14 @@ router.get('/facebook/callback', function (req, res, next) {
         }
         var email = {}
         var token = {}
-        if (req.session.token) {
-            token = req.session.token
-            email = await authorUser.authorizationUser(token)
+        if (user === true) {
+            token = info.token
+            req.session.token = token
+            email = await authorUser.authorizationUser(info.token)
         }
         if (!req.session.token && info.token) {
             email = await authorUser.authorizationUser(info.token)
+            token = info.token
             req.session.token = info.token
             console.log(email)
         }
